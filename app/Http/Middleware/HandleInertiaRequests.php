@@ -31,9 +31,13 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            // Compat: mantener 'user' directo (ya usado en varias vistas)
+            'user' => $request->user(),
+            // Breeze/Profile espera props en auth.user
             'auth' => [
                 'user' => $request->user(),
             ],
+            'modulos' => session('modulos', []),
         ];
     }
 }

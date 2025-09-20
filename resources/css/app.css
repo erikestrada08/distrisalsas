@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base animation setup */
+.animate-base {
+    transition: all 0.7s ease-out;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Entrada */
+.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Salida */
+.mirror-out {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animate-base {
+    opacity: 0;
+    transition: all 0.6s ease-out;
+}
+
+.in-view {
+    opacity: 1;
+}
+
+/* Animaciones disponibles */
+.fade-in {
+    transform: translateY(20px);
+}
+.fade-in.in-view {
+    transform: translateY(0);
+}
+
+.zoom-in {
+    transform: scale(0.95);
+}
+.zoom-in.in-view {
+    transform: scale(1);
+}
+
+.slide-left {
+    transform: translateX(40px);
+}
+.slide-left.in-view {
+    transform: translateX(0);
+}
+
+.slide-right {
+    transform: translateX(-40px);
+}
+.slide-right.in-view {
+    transform: translateX(0);
+}
+
+.rotate-in {
+    transform: rotate(-5deg) scale(0.95);
+}
+.rotate-in.in-view {
+    transform: rotate(0) scale(1);
+}
