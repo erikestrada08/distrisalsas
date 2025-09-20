@@ -4,7 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import Plantilla from '@/Layouts/Plantilla.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 
 const form = useForm({
     name: '',
@@ -23,7 +23,7 @@ const submit = () => {
 <template>
     <div>
         <Head title="Register" />
-        <Plantilla>
+        <GuestLayout>
             <div class="flex gap-1 min-h-full flex-col items-center pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
                 <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800 flex flex-col items-center justify-center">
                     <form 
@@ -119,6 +119,6 @@ const submit = () => {
                 </div>
             </div>
         
-        </Plantilla>
+        </GuestLayout>
     </div>
 </template>

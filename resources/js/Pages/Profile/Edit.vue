@@ -3,7 +3,7 @@ import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import { Head, router } from '@inertiajs/vue3';
-import PrincipalLayout from '@/Layouts/PrincipalLayout.vue';
+import DPanelLayout from '@/Layouts/DPanelLayout.vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <Head title="Perfil" />
-    <PrincipalLayout @seleccionarModulo="(m) => router.visit(`/principal?modulo=${m.id}`)">
+    <DPanelLayout @seleccionarModulo="(m) => router.visit(`/principal?modulo=${m.id}`)">
         <div class="p-2 md:p-4">
             <div class="mx-auto max-w-7xl space-y-6">
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
@@ -37,6 +37,6 @@ defineProps({
                 </div>
             </div>
         </div>
-    </PrincipalLayout>
+    </DPanelLayout>
     
 </template>

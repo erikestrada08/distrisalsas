@@ -1,6 +1,6 @@
 <template>
   <Head title="DPanel" />
-  <PrincipalLayout :modulo-actual="moduloActual" @seleccionarModulo="obtenerSubModulos">
+  <DPanelLayout :modulo-actual="moduloActual" @seleccionarModulo="obtenerSubModulos">
     <!-- aviso de modulo no encontrado -->
     <div v-if="!nombreComponente && subModulos.length < 1" class="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-gray-100 leading-none text-gray-500">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="size-16">
@@ -36,17 +36,17 @@
         <component :is="componenteActual" />
       </Transition>
     </keep-alive>
-  </PrincipalLayout>
+  </DPanelLayout>
   
 </template>
 
 <script>
 import { defineAsyncComponent, nextTick } from 'vue';
 import { Head } from '@inertiajs/vue3';
-import PrincipalLayout from '@/Layouts/PrincipalLayout.vue';
+import DPanelLayout from '@/Layouts/DPanelLayout.vue';
 
 export default {
-  components: { Head, PrincipalLayout },
+  components: { Head, DPanelLayout },
   data() {
     return {
       subModulos: [],

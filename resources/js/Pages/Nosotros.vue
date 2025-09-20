@@ -1,6 +1,6 @@
 <template>
     <Head title="Catálogo" />
-    <Plantilla>
+    <GuestLayout>
   <!-- Hero con imagen de fondo -->
   <section class="relative h-screen bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('https://source.unsplash.com/1600x900/?deli,food');">
     <div class="bg-black bg-opacity-60 w-full h-full absolute top-0 left-0"></div>
@@ -183,16 +183,16 @@
     </div>
   </section>
 
-    </Plantilla>
+    </GuestLayout>
 </template>
 
 <script>
 import { Head } from "@inertiajs/vue3";
-import Plantilla from "@/Layouts/Plantilla.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 
 export default {
     components: {
-        Plantilla,
+        GuestLayout,
         Head,
     },
     data() {

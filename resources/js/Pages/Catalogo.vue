@@ -1,6 +1,6 @@
 <template>
   <Head title="Catálogo" />
-  <Plantilla>
+  <GuestLayout>
     <section class="bg-gray-50 min-h-screen p-4">
 
       <!-- Encabezado emocional -->
@@ -115,17 +115,17 @@
         </main>
       </div>
     </section>
-  </Plantilla>
+  </GuestLayout>
 </template>
 
 
 <script>
 import { Head } from '@inertiajs/vue3';
-import Plantilla from '@/Layouts/Plantilla.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 
 export default {
     components:{
-        Plantilla,
+        GuestLayout,
         Head
     },
     data(){
@@ -231,3 +231,4 @@ export default {
     grid-area: productos;
 }
 </style>
+

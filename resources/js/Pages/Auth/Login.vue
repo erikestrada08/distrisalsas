@@ -5,7 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import Plantilla from '@/Layouts/Plantilla.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
@@ -33,7 +33,7 @@ const submit = () => {
 <template>
     
     <Head title="Log in" />
-    <Plantilla>
+    <GuestLayout>
 
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
@@ -117,5 +117,5 @@ const submit = () => {
                 class="text-blue-500 underline">Registrate</Link>
             </div>
         </div>
-    </Plantilla>
+    </GuestLayout>
 </template>

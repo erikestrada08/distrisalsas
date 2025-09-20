@@ -62,7 +62,7 @@
 import { Link } from '@inertiajs/vue3';
 
 export default {
-  name: 'PrincipalLayout',
+  name: 'DPanelLayout',
   components: { Link },
   props: {
     moduloActual: {
@@ -124,4 +124,3 @@ export default {
   }
 }
 </style>
-

@@ -1,5 +1,5 @@
 <template>
-    <Plantilla>
+    <GuestLayout>
         <div ref="root">
             <!-- Hero / Bienvenida -->
             <section v-scroll-animation class="relative bg-yellow-50 py-12 px-4 text-center sm:py-16 sm:px-6">
@@ -266,16 +266,16 @@
 </section>
 
         </div>
-    </Plantilla>
+    </GuestLayout>
 </template>
 
 <script>
-import Plantilla from "@/Layouts/Plantilla.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Link } from '@inertiajs/vue3';
 
 export default {
     components: {
-        Plantilla,
+        GuestLayout,
         Link
     },
     data() {
