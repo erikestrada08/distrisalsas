@@ -1,19 +1,24 @@
 <template>
   <div class="container">
     <!-- Top bar -->
-    <div class="nav-bar flex justify-between items-center p-2 shadow-md bg-card text-foreground">
+    <div class="nav-bar flex justify-between items-center p-2 shadow-md bg-card border-b text-foreground">
       <img src="/imagenes/logo-rojo-amarillo.png" alt="Logo de distrisalsas" class="h-12 w-auto object-contain" />
       
 
       <div class="flex items-center gap-2 relative" ref="userMenu">
         <button class="flex items-center gap-2 hover:opacity-80" @click.stop="userMenuOpen = !userMenuOpen" aria-haspopup="menu" :aria-expanded="userMenuOpen">
+
+          <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" :d="userMenuOpen ? 'm4.5 15.75 7.5-7.5 7.5 7.5' : 'm19.5 8.25-7.5 7.5-7.5-7.5'" />
+          </svg>
+
           <span>Bienvenid@, <span class="font-bold">{{ usuario.name }}</span></span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
           </svg>
         </button>
         <!-- Dropdown -->
-        <div v-show="userMenuOpen" class="absolute right-0 top-full mt-2 w-52 bg-card text-foreground border border-border rounded shadow-md z-50">
+        <div v-show="userMenuOpen" class="absolute right-0 top-full mt-5 w-52 bg-card text-foreground border rounded-b shadow-md z-50">
           <Link :href="route('profile.edit')" class="block px-3 py-2 hover:bg-muted/10">Perfil</Link>
           <ThemeToggle class="w-full justify-start rounded-none border-0 bg-transparent hover:bg-muted/10 px-3 py-2" />
           <Link :href="route('logout')" method="post" as="button" class="w-full text-left px-3 py-2 hover:bg-muted/10">Cerrar sesión</Link>
