@@ -37,13 +37,28 @@ const appName = import.meta.env.VITE_APP_NAME || "Laravel";
     }
 })();
 
+const all = {
+    ...import.meta.glob('./Pages/**/*.vue'),
+    ...import.meta.glob('./Modules/**/*.vue')
+};
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
+    resolve: async (name) => {
+        const candidates = [
             `./${name}.vue`,
-            import.meta.glob("./**/*.vue")
-        ),
+            `./${name}/Index.vue`,
+            `./Pages/${name}.vue`,
+            `./Pages/${name}/Index.vue`,
+            `./Modules/${name}.vue`,
+            `./Modules/${name}/Index.vue`,
+        ];
+
+        for (const path of candidates) {
+            if (all[path]) return (await all[path]()).default;
+        }
+
+        throw new Error(`Page not found: ${candidates.join(' OR ')}`);
+    },
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) });
         app.use(plugin)
