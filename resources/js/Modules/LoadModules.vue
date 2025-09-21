@@ -17,7 +17,6 @@
 
     <!-- submodulos -->
     <div v-if="subModulos.length > 0" class="flex gap-1">
-      <!-- scroll horizontal de submódulos en móvil -->
       <div class="flex gap-1 overflow-x-auto w-full">
         <div v-for="submodulo in subModulos" :key="submodulo.id" class="min-w-[200px] bg-white rounded-md shadow flex items-center justify-center p-2 cursor-pointer border hover:border-blue-600" :title="submodulo.descripcion" @click="renderizar(submodulo)">
           <div class="basis-1/3 flex-shrink-0 flex items-center justify-center">
@@ -58,6 +57,7 @@ export default {
   computed: {
     componenteActual() {
       if (!this.nombreComponente) return null;
+      // Map estático para que Vite ubique los módulos
       const modules = import.meta.glob('/resources/js/Modules/*.vue');
       const key = `/resources/js/Modules/${this.nombreComponente}.vue`;
       if (!modules[key]) {
@@ -106,3 +106,4 @@ export default {
 </script>
 
 <style scoped></style>
+

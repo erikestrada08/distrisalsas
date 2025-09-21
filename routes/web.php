@@ -37,7 +37,7 @@ Route::middleware(['auth.home', 'verified'])->group(function () {
 
     // Panel principal
     Route::get('/principal', function () {
-        return Inertia::render('LoadModules');
+        return Inertia::render('Modules/LoadModules');
     })->name('principal');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
