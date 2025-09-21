@@ -127,6 +127,7 @@
               <template #body="{ data }">
                 <div class="flex items-center justify-center">
                   <button 
+                    tabindex="-1"
                     class="text-red-600 hover:text-red-700" 
                     title="Eliminar fila"
                     @click.stop="eliminarFila(data._key)"
