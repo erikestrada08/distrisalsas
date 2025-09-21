@@ -24,6 +24,19 @@ import Aura from "@primeuix/themes/aura";
 import ScrollAnimation from './Directives/ScrollAnimation'
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
+// Initialize theme (light/dark) before app mounts
+(() => {
+    try {
+        const storageKey = 'theme';
+        const user = localStorage.getItem(storageKey);
+        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = user || (systemPrefersDark ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+    } catch (_) {
+        // no-op
+    }
+})();
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>

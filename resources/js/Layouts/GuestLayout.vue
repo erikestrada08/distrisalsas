@@ -46,31 +46,31 @@
             </div>
 
             <!-- navegacion -->
-            <nav class="relative bg-red-500 flex justify-center gap-1 p-2">
+            <nav class="relative bg-primary text-primary-foreground flex justify-center gap-1 p-2">
                 <Link
                     :href="route('inicio')"
-                    class="text-white font-normal hover:font-bold hover:text-white px-1"
+                    class="font-normal hover:font-bold hover:opacity-90 px-1"
                     >Inicio</Link
                 >
                 <Link
                     :href="route('catalogo')"
-                    class="text-white font-normal hover:font-bold hover:text-white px-1"
+                    class="font-normal hover:font-bold hover:opacity-90 px-1"
                     >Productos</Link
                 >
                 <Link
                     :href="route('nosotros')"
-                    class="text-white font-normal hover:font-bold hover:text-white px-1"
+                    class="font-normal hover:font-bold hover:opacity-90 px-1"
                     >Sobre Nosotros</Link
                 >
                 <Link
                 href="#"
-                class="text-white font-normal hover:font-bold hover:text-white px-1"
+                class="font-normal hover:font-bold hover:opacity-90 px-1"
                 >
                     Contacto
                 </Link>
-                <Link href="#" class="text-white font-normal relative px-1">
+                <Link href="#" class="font-normal relative px-1">
                     <span
-                        class="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 bg-red-500 text-white text-xs font-semibold rounded-lg px-1 py-0.5 flex items-center justify-center border border-white"
+                        class="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 bg-accent text-accent-foreground text-xs font-semibold rounded-lg px-1 py-0.5 flex items-center justify-center border border-border"
                     >
                         {{ this.$store.getters.obtenerCarrito.length }}
                     </span>
@@ -82,9 +82,12 @@
                 class="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer z-20"
                 >
                     <i
-                        class="fa-solid fa-right-to-bracket text-xl text-white"
+                        class="fa-solid fa-right-to-bracket text-xl"
                     ></i>
                 </Link>
+                <div class="absolute left-2 top-1/2 -translate-y-1/2 z-20">
+                    <ThemeToggle />
+                </div>
             </nav>
         </header>
 
@@ -100,6 +103,7 @@
 </template>
 <script>
 import { Head, Link } from "@inertiajs/vue3";
+import ThemeToggle from "@/Components/ThemeToggle.vue";
 
 export default {
     data() {
@@ -116,6 +120,7 @@ export default {
     components: {
         Head,
         Link,
+        ThemeToggle,
     },
     props: {},
     methods: {},

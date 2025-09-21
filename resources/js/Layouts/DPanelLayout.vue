@@ -1,8 +1,9 @@
 <template>
   <div class="container">
     <!-- Top bar -->
-    <div class="nav-bar flex justify-between items-center p-2 shadow-md">
+    <div class="nav-bar flex justify-between items-center p-2 shadow-md bg-card text-foreground">
       <img src="/imagenes/logo-rojo-amarillo.png" alt="Logo de distrisalsas" class="h-12 w-auto object-contain" />
+      
 
       <div class="flex items-center gap-2 relative" ref="userMenu">
         <button class="flex items-center gap-2 hover:opacity-80" @click.stop="userMenuOpen = !userMenuOpen" aria-haspopup="menu" :aria-expanded="userMenuOpen">
@@ -10,9 +11,10 @@
           <img src="/imagenes/iconos/icono-usuario.png" alt="user" class="h-8" />
         </button>
         <!-- Dropdown -->
-        <div v-show="userMenuOpen" class="absolute right-0 top-full mt-2 w-44 bg-white border rounded shadow-md z-50">
-          <Link :href="route('profile.edit')" class="block px-3 py-2 hover:bg-gray-100">Perfil</Link>
-          <Link :href="route('logout')" method="post" as="button" class="w-full text-left px-3 py-2 hover:bg-gray-100">Cerrar sesión</Link>
+        <div v-show="userMenuOpen" class="absolute right-0 top-full mt-2 w-52 bg-card text-foreground border border-border rounded shadow-md z-50">
+          <Link :href="route('profile.edit')" class="block px-3 py-2 hover:bg-muted/10">Perfil</Link>
+          <ThemeToggle class="w-full justify-start rounded-none border-0 bg-transparent hover:bg-muted/10 px-3 py-2" />
+          <Link :href="route('logout')" method="post" as="button" class="w-full text-left px-3 py-2 hover:bg-muted/10">Cerrar sesión</Link>
         </div>
       </div>
 
@@ -30,7 +32,7 @@
     <!-- Sidebar -->
     <div class="side-bar"
       :class="{
-        'fixed z-40 bg-white top-0 left-0 h-full w-60 shadow transform transition-transform duration-200 -translate-x-full md:translate-x-0 md:static md:w-[80px]': true,
+        'fixed z-40 bg-card top-0 left-0 h-full w-60 shadow transform transition-transform duration-200 -translate-x-full md:translate-x-0 md:static md:w-[80px]': true,
         'translate-x-0': sidebarOpen
       }"
     >
@@ -38,8 +40,8 @@
         <ul class="flex flex-col">
           <li v-for="modulo in modulos" :key="modulo.id" :title="modulo.nombre"
               @click="$emit('seleccionarModulo', modulo)"
-              :class="{ 'bg-gray-100': moduloActual == modulo.nombre }"
-              class="w-full h-[60px] gap-5 px-2 py-1 hover:bg-gray-200 cursor-pointer relative">
+              :class="{ 'bg-muted/10': moduloActual == modulo.nombre }"
+              class="w-full h-[60px] gap-5 px-2 py-1 hover:bg-muted/20 cursor-pointer relative">
             <span class="bg-cyan-500 w-[2px] h-[4px]" />
             <span class="absolute top-1/2 left-1/2 -transform -translate-x-[14px] -translate-y-1/2" v-html="modulo.icono"></span>
           </li>
@@ -48,7 +50,7 @@
     </div>
 
     <!-- Content -->
-    <div class="content p-1 bg-gray-100 relative">
+    <div class="content p-1 bg-background relative">
       <slot />
     </div>
 
@@ -60,10 +62,11 @@
 
 <script>
 import { Link } from '@inertiajs/vue3';
+import ThemeToggle from '@/Components/ThemeToggle.vue';
 
 export default {
   name: 'DPanelLayout',
-  components: { Link },
+  components: { Link, ThemeToggle },
   props: {
     moduloActual: {
       type: String,
