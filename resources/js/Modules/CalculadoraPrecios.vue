@@ -138,9 +138,7 @@
             </Column>
 
           <template #empty>
-            <div class="py-6 text-center text-gray-500">
-              Aún no has agregado productos para calcular el precio.
-            </div>
+              <div class="text-center text-gray-500 p-2">Aún no has agregado productos para calcular el precio.</div>
           </template>
           </DataTable>
         </div>
