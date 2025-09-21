@@ -1,60 +1,58 @@
 <template>
-  <div class="p-1 flex gap-1 w-full items-start flex-col md:flex-row">
-    <!-- Panel izquierdo: Carga de factura y opciones -->
+  <div class="p-1 flex gap-1 w-full items-start flex-col md:flex-row bg-background text-foreground">
     <div class="w-full md:min-w-[380px] md:max-w-[380px] md:w-[380px] flex flex-col gap-1">
-      <!-- Cargar factura (opcional) -->
-      <div class="flex flex-col gap-1 bg-white p-2 rounded shadow-lg">
+      <div class="flex flex-col gap-1 bg-card text-foreground p-2 rounded shadow-lg border border-border">
         <label
           @dragover.prevent="dragging = true"
           @dragleave.prevent="dragging = false"
           @drop.prevent="handleDrop"
-          class="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-6 transition-all cursor-pointer hover:border-blue-400 hover:bg-blue-50"
-          :class="dragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300 bg-white'"
+          class="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-6 transition-all cursor-pointer hover:border-primary/40 hover:bg-muted/10"
+          :class="dragging ? 'border-primary/50 bg-muted/10' : 'border-border bg-card'"
           title="Subir foto de la factura para extraer productos"
           for="facturaInput"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.7" stroke="currentColor" class="size-20 text-gray-400">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
           </svg>
-          <span class="text-gray-500">Subir factura (opcional)...</span>
+          <span class="text-muted-foreground text-gray-500">Subir factura (opcional)...</span>
         </label>
         <input id="facturaInput" ref="fileInput" type="file" accept="image/*" multiple class="hidden" @change="handleFileChange" />
         <div v-if="images.length" class="flex flex-wrap gap-2">
           <div 
             v-for="(img, i) in images" 
             :key="img.id" 
-            class="relative border w-[120px] rounded p-1 hover:shadow group"
+            class="relative border w-[120px] rounded p-1 hover:shadow group border-border bg-card"
           >
             <img :src="img.url" alt="Factura" class="object-cover w-full h-[90px] cursor-pointer" @click="previsualizarAt(i)" />
             <button class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs opacity-0 group-hover:opacity-100 transition" @click.prevent="removeImage(i)" title="Eliminar">
               ×
             </button>
-            <div class="text-center text-[10px] text-gray-500 truncate" :title="img.name">{{ img.name }}</div>
+            <div class="text-center text-[10px] text-gray-500 dark:text-gray-400 truncate" :title="img.name">{{ img.name }}</div>
           </div>
         </div>
-        <div class="mt-1 text-center text-sm text-gray-600" v-if="loading">Procesando imagen y OCR...</div>
+        <div class="mt-1 text-center text-sm text-gray-600 dark:text-gray-300" v-if="loading">Procesando imagen y OCR...</div>
       </div>
 
       <!-- Parámetros de cálculo -->
-      <div class="flex flex-col gap-2 bg-white p-2 rounded shadow-lg">
+      <div class="flex flex-col gap-2 bg-card text-foreground p-2 rounded shadow-lg border border-border">
         <div>
-          <label class="block text-sm font-medium text-gray-700">IVA del costo</label>
-          <select v-model="ivaModo" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">IVA del costo</label>
+          <select v-model="ivaModo" class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
             <option value="incluido">Incluido en el precio</option>
             <option value="mas">Más IVA</option>
           </select>
         </div>
         <div class="flex gap-2">
           <div class="flex-1">
-            <label class="block text-sm font-medium text-gray-700">IVA %</label>
-            <input type="number" min="0" step="0.01" v-model.number="ivaPorcentaje" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">IVA %</label>
+            <input type="number" min="0" step="0.01" v-model.number="ivaPorcentaje" class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
           </div>
           <div class="flex-1">
-            <label class="block text-sm font-medium text-gray-700">Utilidad %</label>
-            <input type="number" min="0" step="0.01" v-model.number="utilidadPorcentaje" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Utilidad %</label>
+            <input type="number" min="0" step="0.01" v-model.number="utilidadPorcentaje" class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
           </div>
         </div>
-        <div class="text-xs text-gray-500">
+        <div class="text-xs text-gray-500 dark:text-gray-400">
           - "Incluido" descuenta IVA del precio unitario para hallar el costo neto.<br />
           - "Más IVA" trata el precio unitario como neto (sin IVA).
         </div>
@@ -63,7 +61,7 @@
     </div>
 
     <!-- Panel derecho: Tabla de productos y resultados -->
-    <div class="w-full md:flex-1 bg-white p-2 rounded shadow-lg">
+    <div class="w-full md:flex-1 bg-card text-foreground p-2 rounded shadow-lg border border-border">
       <div class="flex items-center justify-between mb-2">
         <span class="font-semibold">Productos detectados / cargados</span>
         <button @click.prevent="agregarFila" class="py-1 px-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex gap-1 items-center" title="Agregar producto manualmente">
@@ -85,6 +83,7 @@
             :tableStyle="{ minWidth: '1100px' }"
             editMode="cell" 
             @cell-edit-complete="editarCelda"
+            :pt="datatablePt"
           >
           <Column field="nombre" header="Producto" sortable :bodyClass="'text-left'">
             <template #editor="{ data }">
@@ -139,20 +138,20 @@
             </Column>
 
           <template #empty>
-              <div class="text-center text-gray-500 p-2">Aún no has agregado productos para calcular el precio.</div>
+              <div class="text-center text-gray-500 dark:text-gray-400 p-2">Aún no has agregado productos para calcular el precio.</div>
           </template>
           </DataTable>
         </div>
       </div>
 
       <div class="mt-2 grid grid-cols-2 gap-2">
-        <div class="bg-gray-50 border rounded p-2">
-          <div class="flex justify-between"><span class="text-gray-600">Unidades:</span><span class="font-semibold">{{ totales.unidades }}</span></div>
-          <div class="flex justify-between"><span class="text-gray-600">Subtotal compra (estimado):</span><span class="font-semibold">{{ formatoMoneda(totales.subtotalCompra) }}</span></div>
+        <div class="bg-muted/10 border border-border rounded p-2">
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Unidades:</span><span class="font-semibold">{{ totales.unidades }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Subtotal compra (estimado):</span><span class="font-semibold">{{ formatoMoneda(totales.subtotalCompra) }}</span></div>
         </div>
-        <div class="bg-gray-50 border rounded p-2">
-          <div class="flex justify-between"><span class="text-gray-600">Venta sugerida (sin IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaSinIva) }}</span></div>
-          <div class="flex justify-between"><span class="text-gray-600">Venta sugerida (con IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaConIva) }}</span></div>
+        <div class="bg-muted/10 border border-border rounded p-2">
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Venta sugerida (sin IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaSinIva) }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Venta sugerida (con IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaConIva) }}</span></div>
         </div>
       </div>
     </div>
@@ -169,13 +168,12 @@ export default {
   data() {
     return {
       loading: false,
-      images: [], // [{ id, file, url, name }]
+      images: [],
       dragging: false,
-      ivaModo: 'incluido', // 'incluido' | 'mas'
+      ivaModo: 'incluido',
       ivaPorcentaje: 19,
       utilidadPorcentaje: 30,
-      filas: [], // { _key, nombre, unidades, precio_unitario }
-      // lightbox
+      filas: [],
       visible: false,
       index: 0,
       productos: []
@@ -191,7 +189,6 @@ export default {
       if (!selected.length) return;
       const added = this.addFiles(selected);
       await this.extraerFacturasBatch(added);
-      // permitir volver a elegir el mismo archivo después
       event.target.value = '';
     },
     async handleDrop(event) {
@@ -233,7 +230,6 @@ export default {
           });
         });
         this.filas.push(...mapped);
-        // Ajustar modo de IVA si todas coinciden, si vienen mezcladas lo dejamos como está
         const modos = new Set((responses || [])
           .map(r => typeof r?.iva_incluido === 'boolean' ? (r.iva_incluido ? 'incluido' : 'mas') : null)
           .filter(Boolean));
@@ -261,9 +257,7 @@ export default {
       try { URL.revokeObjectURL(img.url); } catch (e) {}
       const removedId = img.id;
       this.images.splice(idx, 1);
-      // eliminar filas asociadas a esta imagen
       this.filas = this.filas.filter(f => f.sourceId !== removedId);
-      // ajustar índice del lightbox si aplica
       if (this.index >= this.images.length) this.index = Math.max(0, this.images.length - 1);
     },
     formatoMoneda(valor) {
@@ -301,6 +295,23 @@ export default {
     }
   },
   computed: {
+    datatablePt() {
+      return {
+        root: { class: 'bg-transparent text-foreground' },
+        table: { class: 'bg-card text-foreground border border-border' },
+        header: { class: 'bg-card text-foreground border-b border-border' },
+        thead: { class: 'bg-card' },
+        tbody: { class: 'bg-card' },
+        tfoot: { class: 'bg-card' },
+        column: {
+          headercell: { class: 'bg-card text-foreground border-border' },
+          bodycell: { class: 'bg-card text-foreground border-border' },
+          footercell: { class: 'bg-card text-foreground border-border' },
+        },
+        row: { class: 'bg-card text-foreground border-border' },
+        emptyMessage: { class: 'text-gray-500 dark:text-gray-400' },
+      };
+    },
     totales() {
       const iva = this.ivaPorcentaje / 100;
       const utilidad = this.utilidadPorcentaje / 100;
@@ -345,4 +356,22 @@ export default {
 
 <style scoped>
 .hidden { display: none; }
+:deep(.p-datatable) {
+  background: transparent;
+}
+:deep(.p-datatable .p-datatable-thead > tr > th) {
+  @apply bg-card text-foreground border-border;
+}
+:deep(.p-datatable .p-datatable-tbody > tr > td) {
+  @apply bg-card text-foreground border-border;
+}
+:deep(.p-datatable .p-datatable-tbody input),
+:deep(.p-datatable .p-datatable-tbody select),
+:deep(.p-datatable .p-datatable-tbody textarea) {
+  @apply bg-background text-foreground border-border rounded-md;
+}
+:deep(.p-datatable .p-datatable-tbody input::placeholder),
+:deep(.p-datatable .p-datatable-tbody textarea::placeholder) {
+  @apply text-gray-500 dark:text-gray-400;
+}
 </style>
