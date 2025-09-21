@@ -86,36 +86,62 @@
             editMode="cell" 
             @cell-edit-complete="editarCelda"
           >
-          <Column field="nombre" header="Producto" sortable>
-            <template #editor="{ data, field }">
-              <input type="text" v-model="data[field]" class="w-full" />
+          <Column field="nombre" header="Producto" sortable :bodyClass="'text-left'">
+            <template #editor="{ data }">
+              <select v-model="data._varianteId" @change="onSelectProducto(data)" class="w-full border rounded p-1">
+                <option value="" disabled>Seleccionar...</option>
+                <option v-for="opt in productosOptions" :key="opt.id" :value="opt.id">{{ opt.label }}</option>
+              </select>
             </template>
           </Column>
-        <Column field="unidades" header="Unid." sortable>
-          <template #editor="{ data, field }">
-            <input type="number" min="0" step="1" v-model.number="data[field]" class="w-full" />
-          </template>
-        </Column>
-        <Column field="precio_unitario" header="Precio unit." sortable>
-          <template #body="{ data }">{{ formatoMoneda(data.precio_unitario) }}</template>
-          <template #editor="{ data, field }">
-            <input type="number" min="0" step="0.01" v-model.number="data[field]" class="w-full" />
-          </template>
-        </Column>
+          <Column field="unidades" header="Unid." sortable :bodyClass="'text-right'" :headerClass="'text-right'">
+            <template #body="{ data }"><div class="text-right">{{ data.unidades }}</div></template>
+            <template #editor="{ data, field }">
+              <input type="number" min="0" step="1" v-model.number="data[field]" class="w-full text-right" />
+            </template>
+          </Column>
+          <Column field="precio_unitario" header="Precio unit." sortable :bodyClass="'text-right'" :headerClass="'text-right'">
+            <template #body="{ data }"><div class="text-right">{{ formatoMoneda(data.precio_unitario) }}</div></template>
+            <template #editor="{ data, field }">
+              <input type="number" min="0" step="0.01" v-model.number="data[field]" class="w-full text-right" />
+            </template>
+          </Column>
 
-        <!-- Calculados -->
-        <Column header="Costo neto unit. (sin IVA)">
-          <template #body="{ data }">{{ formatoMoneda(costoNetoUnit(data)) }}</template>
-        </Column>
-        <Column header="Sugerido sin IVA">
-          <template #body="{ data }">{{ formatoMoneda(precioSugeridoSinIva(data)) }}</template>
-        </Column>
-        <Column header="Sugerido con IVA">
-          <template #body="{ data }">{{ formatoMoneda(precioSugeridoConIva(data)) }}</template>
-        </Column>
-        <Column header="Total compra">
-          <template #body="{ data }">{{ formatoMoneda(totalCompra(data)) }}</template>
-        </Column>
+          
+
+            <!-- Calculados -->
+          <Column header="Costo neto unit. (sin IVA)" :bodyClass="'text-right'" :headerClass="'text-right'">
+            <template #body="{ data }"><div class="text-right">{{ formatoMoneda(costoNetoUnit(data)) }}</div></template>
+          </Column>
+          <Column header="Sugerido sin IVA" :bodyClass="'text-right'" :headerClass="'text-right'">
+            <template #body="{ data }"><div class="text-right">{{ formatoMoneda(precioSugeridoSinIva(data)) }}</div></template>
+          </Column>
+          <Column header="Sugerido con IVA" :bodyClass="'text-right'" :headerClass="'text-right'">
+            <template #body="{ data }"><div class="text-right">{{ formatoMoneda(precioSugeridoConIva(data)) }}</div></template>
+          </Column>
+          <Column header="Total compra" :bodyClass="'text-right'" :headerClass="'text-right'">
+            <template #body="{ data }"><div class="text-right">{{ formatoMoneda(totalCompra(data)) }}</div></template>
+          </Column>
+
+            <Column header="Acciones" :bodyClass="'text-center'" :headerClass="'text-center'">
+              <template #body="{ data }">
+                <div class="flex items-center justify-center">
+                  <button 
+                    class="text-red-600 hover:text-red-700" 
+                    title="Eliminar fila"
+                    @click.stop="eliminarFila(data._key)"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </template>
+            </Column>
+
+          <template #empty>
+            <div class="py-6 text-center text-gray-500">
+              Aún no has agregado productos para calcular el precio.
+            </div>
+          </template>
           </DataTable>
         </div>
       </div>
@@ -152,10 +178,15 @@ export default {
       filas: [], // { _key, nombre, unidades, precio_unitario }
       // lightbox
       visible: false,
-      index: 0
+      index: 0,
+      productos: []
     }
   },
   methods: {
+    eliminarFila(key) {
+      const idx = this.filas.findIndex(f => f._key === key);
+      if (idx > -1) this.filas.splice(idx, 1);
+    },
     async handleFileChange(event) {
       const selected = Array.from(event.target.files || []);
       if (!selected.length) return;
@@ -216,7 +247,7 @@ export default {
     },
 
     agregarFila() {
-      this.filas.push({ _key: `${Date.now()}`, nombre: '', unidades: 0, precio_unitario: 0 });
+      this.filas.push({ _key: `${Date.now()}`, nombre: '', unidades: 0, precio_unitario: 0, _varianteId: '' });
     },
     editarCelda({ data, newValue, field }) {
       data[field] = isNaN(newValue) ? newValue : Number(newValue);
@@ -239,6 +270,15 @@ export default {
     formatoMoneda(valor) {
       const num = Number(valor ?? 0);
       return num.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+    },
+    onSelectProducto(row) {
+      const sel = row && row._varianteId;
+      if (!sel) return;
+      const opt = (this.productos || []).find(p => String(p.id) === String(sel));
+      if (opt) {
+        row.id = opt.id;
+        row.nombre = opt.label;
+      }
     },
     costoNetoUnit(row) {
       const iva = this.ivaPorcentaje / 100;
@@ -281,7 +321,25 @@ export default {
     },
     lightboxImgs() {
       return this.images.map(img => img.url);
+    },
+    productosOptions() {
+      return this.productos || [];
     }
+  },
+  created() {
+    (async () => {
+      try {
+        const { data: { data: productos } } = await axios.get('/producto/listar');
+        const listaVariantes = [];
+        productos?.forEach(({ producto, variantes }) => {
+          variantes?.forEach(({ id: varianteId, atributos_json }) => {
+            const attrs = atributos_json ? Object.values(JSON.parse(atributos_json)).join(' ') : '';
+            listaVariantes.push({ id: varianteId, label: `${producto} - ${attrs}`.trim() });
+          });
+        });
+        this.productos = listaVariantes;
+      } catch (error) { console.error(error); }
+    })();
   }
 }
 </script>
