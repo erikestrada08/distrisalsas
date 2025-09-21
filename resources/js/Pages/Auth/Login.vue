@@ -2,11 +2,9 @@
 import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
     canResetPassword: {
@@ -41,16 +39,10 @@ const submit = () => {
 
         <div class="flex gap-1 min-h-full flex-col items-center pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
             <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800 flex flex-col items-center justify-center">
-                <!-- <div>
-                    <Link href="/">
-                        <ApplicationLogo class="h-20 w-20 fill-current text-gray-500"/>
-                    </Link>
-                </div> -->
                 <form class="w-full flex flex-col gap-1" @submit.prevent="submit">
                     <div>
                         <InputLabel for="email" value="Correo electrónico" />
         
-                        <!-- value="estrada.erik321@gmail.com" -->
                         <TextInput
                             id="email"
                             type="email"
