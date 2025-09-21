@@ -58,7 +58,13 @@ export default {
   computed: {
     componenteActual() {
       if (!this.nombreComponente) return null;
-      return defineAsyncComponent(() => import(`./Modulos/subModulos/${this.nombreComponente}.vue`));
+      const modules = import.meta.glob('/resources/js/Modules/*.vue');
+      const key = `/resources/js/Modules/${this.nombreComponente}.vue`;
+      if (!modules[key]) {
+        console.error('Submodule not found:', key);
+        return null;
+      }
+      return defineAsyncComponent(modules[key]);
     }
   },
   methods: {
