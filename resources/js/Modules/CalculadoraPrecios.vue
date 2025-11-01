@@ -309,7 +309,7 @@ export default {
           footercell: { class: 'bg-card text-foreground border-border' },
         },
         row: { class: 'bg-card text-foreground border-border' },
-        emptyMessage: { class: 'text-gray-500 },
+        emptyMessage: { class: 'text-gray-500' },
       };
     },
     totales() {
@@ -355,24 +355,6 @@ export default {
 </script>
 
 <style scoped>
-.hidden { display: none; }
-:deep(.p-datatable) {
-  background: transparent;
-}
-:deep(.p-datatable .p-datatable-thead > tr > th) {
-  @apply bg-card text-foreground border-border;
-}
-:deep(.p-datatable .p-datatable-tbody > tr > td) {
-  @apply bg-card text-foreground border-border;
-}
-:deep(.p-datatable .p-datatable-tbody input),
-:deep(.p-datatable .p-datatable-tbody select),
-:deep(.p-datatable .p-datatable-tbody textarea) {
-  @apply bg-background text-foreground border-border rounded-md;
-}
-:deep(.p-datatable .p-datatable-tbody input::placeholder),
-:deep(.p-datatable .p-datatable-tbody textarea::placeholder) {
-  @apply text-gray-500
-}
+
 </style>
 
