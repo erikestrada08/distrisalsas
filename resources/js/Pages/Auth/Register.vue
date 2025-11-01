@@ -24,8 +24,8 @@ const submit = () => {
     <div>
         <Head title="Register" />
         <GuestLayout>
-            <div class="flex gap-1 min-h-full flex-col items-center pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
-                <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800 flex flex-col items-center justify-center">
+            <div class="flex gap-1 min-h-full flex-col items-center pt-6 sm:justify-center sm:pt-0">
+                <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg flex flex-col items-center justify-center">
                     <form 
                     class="w-full flex flex-col gap-1"
                     @submit.prevent="submit">
@@ -98,7 +98,7 @@ const submit = () => {
         
                         <Link
                             :href="route('login')"
-                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Ya estás registrado?
                         </Link>
@@ -122,3 +122,4 @@ const submit = () => {
         </GuestLayout>
     </div>
 </template>
+

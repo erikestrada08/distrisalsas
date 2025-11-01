@@ -86,7 +86,7 @@
                     ></i>
                 </Link>
                 <div class="absolute left-2 top-1/2 -translate-y-1/2 z-20">
-                    <ThemeToggle />
+                    
                 </div>
             </nav>
         </header>
@@ -103,7 +103,6 @@
 </template>
 <script>
 import { Head, Link } from "@inertiajs/vue3";
-import ThemeToggle from "@/Components/ThemeToggle.vue";
 
 export default {
     data() {
@@ -120,7 +119,6 @@ export default {
     components: {
         Head,
         Link,
-        ThemeToggle,
     },
     props: {},
     methods: {},

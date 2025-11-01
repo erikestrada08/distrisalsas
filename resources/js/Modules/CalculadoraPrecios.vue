@@ -27,16 +27,16 @@
             <button class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs opacity-0 group-hover:opacity-100 transition" @click.prevent="removeImage(i)" title="Eliminar">
               ×
             </button>
-            <div class="text-center text-[10px] text-gray-500 dark:text-gray-400 truncate" :title="img.name">{{ img.name }}</div>
+            <div class="text-center text-[10px] text-gray-500 truncate" :title="img.name">{{ img.name }}</div>
           </div>
         </div>
-        <div class="mt-1 text-center text-sm text-gray-600 dark:text-gray-300" v-if="loading">Procesando imagen y OCR...</div>
+        <div class="mt-1 text-center text-sm text-gray-600" v-if="loading">Procesando imagen y OCR...</div>
       </div>
 
       <!-- Parámetros de cálculo -->
       <div class="flex flex-col gap-2 bg-card text-foreground p-2 rounded shadow-lg border border-border">
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">IVA del costo</label>
+          <label class="block text-sm font-medium text-gray-700">IVA del costo</label>
           <select v-model="ivaModo" class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
             <option value="incluido">Incluido en el precio</option>
             <option value="mas">Más IVA</option>
@@ -44,15 +44,15 @@
         </div>
         <div class="flex gap-2">
           <div class="flex-1">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">IVA %</label>
+            <label class="block text-sm font-medium text-gray-700">IVA %</label>
             <input type="number" min="0" step="0.01" v-model.number="ivaPorcentaje" class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
           </div>
           <div class="flex-1">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Utilidad %</label>
+            <label class="block text-sm font-medium text-gray-700">Utilidad %</label>
             <input type="number" min="0" step="0.01" v-model.number="utilidadPorcentaje" class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
           </div>
         </div>
-        <div class="text-xs text-gray-500 dark:text-gray-400">
+        <div class="text-xs text-gray-500">
           - "Incluido" descuenta IVA del precio unitario para hallar el costo neto.<br />
           - "Más IVA" trata el precio unitario como neto (sin IVA).
         </div>
@@ -138,7 +138,7 @@
             </Column>
 
           <template #empty>
-              <div class="text-center text-gray-500 dark:text-gray-400 p-2">Aún no has agregado productos para calcular el precio.</div>
+              <div class="text-center text-gray-500 p-2">Aún no has agregado productos para calcular el precio.</div>
           </template>
           </DataTable>
         </div>
@@ -146,12 +146,12 @@
 
       <div class="mt-2 grid grid-cols-2 gap-2">
         <div class="bg-muted/10 border border-border rounded p-2">
-          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Unidades:</span><span class="font-semibold">{{ totales.unidades }}</span></div>
-          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Subtotal compra (estimado):</span><span class="font-semibold">{{ formatoMoneda(totales.subtotalCompra) }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600">Unidades:</span><span class="font-semibold">{{ totales.unidades }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600">Subtotal compra (estimado):</span><span class="font-semibold">{{ formatoMoneda(totales.subtotalCompra) }}</span></div>
         </div>
         <div class="bg-muted/10 border border-border rounded p-2">
-          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Venta sugerida (sin IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaSinIva) }}</span></div>
-          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Venta sugerida (con IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaConIva) }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600">Venta sugerida (sin IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaSinIva) }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600">Venta sugerida (con IVA):</span><span class="font-semibold">{{ formatoMoneda(totales.ventaConIva) }}</span></div>
         </div>
       </div>
     </div>
@@ -309,7 +309,7 @@ export default {
           footercell: { class: 'bg-card text-foreground border-border' },
         },
         row: { class: 'bg-card text-foreground border-border' },
-        emptyMessage: { class: 'text-gray-500 dark:text-gray-400' },
+        emptyMessage: { class: 'text-gray-500 },
       };
     },
     totales() {
@@ -372,6 +372,7 @@ export default {
 }
 :deep(.p-datatable .p-datatable-tbody input::placeholder),
 :deep(.p-datatable .p-datatable-tbody textarea::placeholder) {
-  @apply text-gray-500 dark:text-gray-400;
+  @apply text-gray-500
 }
 </style>
+

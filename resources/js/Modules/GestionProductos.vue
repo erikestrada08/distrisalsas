@@ -2,16 +2,16 @@
     <!-- <Head title="Productos" />
     <PlantillaAdministrativa> -->
                 
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 bg-background text-foreground">
 
             <!-- etiquetas informativas -->
             <div class="flex gap-1 sticky top-0 z-10 overflow-x-auto pb-1">
 
                 <!-- productos -->
                 <div 
-                class="flex border hover:border-lime-500 rounded shadow w-[200px] h-[100px] items-center justify-center gap-4 bg-white cursor-pointer"
+                class="flex border hover:border-lime-500 rounded shadow w-[200px] h-[100px] items-center justify-center gap-4 bg-card text-foreground border-border cursor-pointer"
                 :class="{
-                    'bg-gray-100': moduloActivo == 'productos'
+                    'bg-muted/20': moduloActivo == 'productos'
                 }"
                 @click.prevent="moduloActivo = 'productos'"
                 >
@@ -29,9 +29,9 @@
 
                 <!-- categorias -->
                 <div 
-                class="flex border hover:border-emerald-500 rounded shadow w-[200px] h-[100px] items-center justify-center gap-4 bg-white cursor-pointer"
+                class="flex border hover:border-emerald-500 rounded shadow w-[200px] h-[100px] items-center justify-center gap-4 bg-card text-foreground border-border cursor-pointer"
                 :class="{
-                    'bg-gray-100': moduloActivo == 'categorias'
+                    'bg-muted/20': moduloActivo == 'categorias'
                 }"
                 @click.prevent="moduloActivo = 'categorias'"
                 >
@@ -50,9 +50,9 @@
 
                 <!-- marcas -->
                 <div 
-                class="flex border hover:border-cyan-500 rounded shadow w-[200px] h-[100px] items-center justify-center gap-4 bg-white cursor-pointer"
+                class="flex border hover:border-cyan-500 rounded shadow w-[200px] h-[100px] items-center justify-center gap-4 bg-card text-foreground border-border cursor-pointer"
                 :class="{
-                    'bg-gray-100': moduloActivo == 'marcas'
+                    'bg-muted/20': moduloActivo == 'marcas'
                 }"
                 @click.prevent="moduloActivo = 'marcas'"
                 >
@@ -93,7 +93,7 @@
         
                     <!-- fomulario -->
                     <div>
-                        <div class="formulario flex flex-col gap-1 p-2 rounded-md min-w-[300px] max-w-[300px] shadow-md bg-white">
+                        <div class="formulario flex flex-col gap-1 p-2 rounded-md min-w-[300px] max-w-[300px] shadow-md bg-card text-foreground border border-border">
             
                             <div class="flex justify-center">
             
@@ -115,7 +115,7 @@
 
                                     <div 
                                     @click.prevent="$refs.imagen.click()"
-                                    class="absolute bottom-0 right-0 rounded-full w-[30px] h-[30px] flex items-center justify-center bg-white cursor-pointer hover:bg-gray-200"
+                                    class="absolute bottom-0 right-0 rounded-full w-[30px] h-[30px] flex items-center justify-center bg-card border border-border cursor-pointer hover:bg-muted/20"
                                     title="Subir imagen">
                                         <i class="fa-solid fa-camera text-xl text-gray-600"></i>
                                     </div>
@@ -124,7 +124,7 @@
                                     ref="imagen"
                                     type="file" 
                                     id="imagen" 
-                                    class="border border-gray-400 rounded-md p-1" @change="obtenerImagen"
+                                    class="border border-border bg-background text-foreground rounded-md p-1" @change="obtenerImagen"
                                     hidden>
             
                                 </div>
@@ -133,19 +133,19 @@
                             <div class="flex flex-col">
                                 <label for="producto" class="text-sm">Nombre del producto</label>
                                 <div class="relative">
-                                    <input type="text" id="producto" class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.producto">
+                                    <input type="text" id="producto" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.producto">
                                     <i class="fa-solid fa-tag absolute top-1/2 left-2 -translate-y-1/2"></i>
                                 </div>
                             </div>
             
                             <div class="flex flex-col">
                                 <label for="descripcion" class="text-sm">Descripción</label>
-                                <textarea rows="3"  id="descripcion" style="resize: none;" class="border border-gray-400 rounded-md p-1" v-model.trim="producto.descripcion"></textarea>
+                                <textarea rows="3"  id="descripcion" style="resize: none;" class="border border-border bg-background text-foreground rounded-md p-1" v-model.trim="producto.descripcion"></textarea>
                             </div>
                             <div class="flex flex-col">
                                 <label for="codigo-barras" class="text-sm">Código de barras</label>
                                 <div class="relative">
-                                    <input type="text" id="codigo-barras" class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.codigo_barras">
+                                    <input type="text" id="codigo-barras" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.codigo_barras">
                                     <i class="fa-solid fa-barcode absolute top-1/2 left-2 -translate-y-1/2 text-sm"></i>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                                 <div class="relative">
                                     <select 
                                     id="marca"
-                                    class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full"
+                                    class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full"
                                     v-model.trim="producto.marca_id">
                                         <option disabled value="">Seleccione una marca</option>
                                         <option 
@@ -181,7 +181,7 @@
                                     <div class="relative">
                                         <select 
                                         id="categoria"
-                                        class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full"
+                                        class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full"
                                         v-model.trim="producto.categoria_id">
                                             <option disabled value="">Seleccione una categoría</option>
                                             <option 
@@ -206,14 +206,14 @@
                             <div class="flex flex-col">
                                 <label for="precio" class="text-sm">Precio</label>
                                 <div class="relative">
-                                    <input type="number" id="precio" class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.precio">
+                                    <input type="number" id="precio" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.precio">
                                     <i class="fa-solid fa-dollar-sign absolute top-1/2 left-2 -translate-y-1/2"></i>
                                 </div>
                             </div>
                             <div class="flex flex-col">
                                 <label for="costo" class="text-sm">Costo</label>
                                 <div class="relative">
-                                    <input type="number" id="costo" class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.costo">
+                                    <input type="number" id="costo" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.costo">
                                     <i class="fa-solid fa-dollar-sign absolute top-1/2 left-2 -translate-y-1/2"></i>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                     <div class="absolute inset-0 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-colors"></div>
 
                                     <!-- Círculo del switch -->
-                                    <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform transform peer-checked:translate-x-5"></div>
+                                    <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-card rounded-full shadow-md transition-transform transform peer-checked:translate-x-5"></div>
                                 </label>
                             </div>
                 
@@ -250,7 +250,7 @@
                     </div>
                     <!-- tabla -->
                     <div>
-                        <div class="rounded-md p-2 shadow-md overflow-x-auto bg-white">
+                        <div class="rounded-md p-2 shadow-md overflow-x-auto bg-card text-foreground border border-border">
                             <DataTable 
                             :value="productosComputada" 
                             dataKey="id" 
@@ -259,6 +259,7 @@
                             class="cursor-pointer"
                             selectionMode="single"
                             removableSort
+                            :pt="pt"
                             @row-click="(event) => cargarDatosEnFormulario(event, 'producto')"
                             >
                                 <Column field="id" header="Id" sortable/>
@@ -300,19 +301,19 @@
                 >
                     <!-- fomulario -->
                     <div>
-                        <div class="formulario flex flex-col gap-1 p-2 rounded-md bg-white min-w-[300px] max-w-[300px] shadow-md">
+                        <div class="formulario flex flex-col gap-1 p-2 rounded-md bg-card text-foreground border border-border min-w-[300px] max-w-[300px] shadow-md">
 
                             <div class="flex flex-col">
                                 <label for="producto" class="text-sm">Nombre de la categoría</label>
                                 <div class="relative">
-                                    <input type="text" id="producto" class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="categoria.categoria">
+                                    <input type="text" id="producto" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="categoria.categoria">
                                     <i class="fa-solid fa-tag absolute top-1/2 left-2 -translate-y-1/2"></i>
                                 </div>
                             </div>
             
                             <div class="flex flex-col">
                                 <label for="descripcion" class="text-sm">Descripción</label>
-                                <textarea rows="3"  id="descripcion" style="resize: none;" class="border border-gray-400 rounded-md p-1" v-model.trim="categoria.descripcion"></textarea>
+                                <textarea rows="3"  id="descripcion" style="resize: none;" class="border border-border bg-background text-foreground rounded-md p-1" v-model.trim="categoria.descripcion"></textarea>
                             </div>
 
                             <div class="flex justify-center gap-1">
@@ -329,12 +330,13 @@
                         </div>
                     </div>
                     <!-- tabla -->
-                    <div class="bg-white rounded-md p-2 shadow-md overflow-x-auto">
+                    <div class="bg-card text-foreground border border-border rounded-md p-2 shadow-md overflow-x-auto">
                         <DataTable 
                         :value="categorias"
                         dataKey="id" 
                         size="small"
                         class="cursor-pointer"
+                        :pt="pt"
                         @row-click="(event) => cargarDatosEnFormulario(event, 'categoria')"
                         selectionMode="single"
                         >
@@ -358,12 +360,12 @@
                 >
                     <!-- fomulario -->
                     <div>
-                        <div class="formulario flex flex-col gap-1 p-2 rounded-md bg-white min-w-[300px] max-w-[300px] shadow-md">
+                        <div class="formulario flex flex-col gap-1 p-2 rounded-md bg-card text-foreground border border-border min-w-[300px] max-w-[300px] shadow-md">
 
                             <div class="flex flex-col">
                                 <label for="producto" class="text-sm">Nombre de la marca</label>
                                 <div class="relative">
-                                    <input type="text" id="producto" class="border border-gray-400 rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="marca.marca">
+                                    <input type="text" id="producto" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="marca.marca">
                                     <i class="fa-solid fa-tag absolute top-1/2 left-2 -translate-y-1/2"></i>
                                 </div>
                             </div>
@@ -382,12 +384,13 @@
                         </div>
                     </div>
                     <!-- tabla -->
-                    <div class="bg-white rounded-md p-2 shadow-md overflow-x-auto">
+                    <div class="bg-card text-foreground border border-border rounded-md p-2 shadow-md overflow-x-auto">
                         <DataTable 
                         :value="marcas"
                         dataKey="id" 
                         size="small"
                         class="cursor-pointer"
+                        :pt="pt"
                         @row-click="(event) => cargarDatosEnFormulario(event, 'marca')"
                         selectionMode="single"
                         >
@@ -408,6 +411,7 @@
 import VueEasyLightbox from 'vue-easy-lightbox';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import { datatablePt } from '@/utils/themePrimevue';
 
 export default {
     components:{
@@ -453,6 +457,9 @@ export default {
             }
         }
     }, 
+    computed: {
+        pt() { return datatablePt(); }
+    },
     methods: {
         obtenerImagen(event){
             const IMAGEN = event.target.files[0];
@@ -635,5 +642,14 @@ export default {
 }
 </script>
 <style scoped>
-
+/* PrimeVue DataTable theming fallback */
+:deep(.p-datatable){background:transparent}
+:deep(.p-datatable .p-datatable-thead>tr>th){@apply bg-card text-foreground border-border}
+:deep(.p-datatable .p-datatable-tbody>tr>td){@apply bg-card text-foreground border-border}
+:deep(.p-datatable .p-datatable-tbody input),
+:deep(.p-datatable .p-datatable-tbody select),
+:deep(.p-datatable .p-datatable-tbody textarea){@apply bg-background text-foreground border-border rounded-md}
+:deep(.p-datatable .p-datatable-tbody input::placeholder),
+:deep(.p-datatable .p-datatable-tbody textarea::placeholder){@apply text-gray-500
 </style>
+

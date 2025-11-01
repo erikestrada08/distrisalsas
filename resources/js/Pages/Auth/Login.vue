@@ -37,8 +37,8 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <div class="flex gap-1 min-h-full flex-col items-center pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
-            <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800 flex flex-col items-center justify-center">
+        <div class="flex gap-1 min-h-full flex-col items-center pt-6 sm:justify-center sm:pt-0">
+            <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg flex flex-col items-center justify-center">
                 <form class="w-full flex flex-col gap-1" @submit.prevent="submit">
                     <div>
                         <InputLabel for="email" value="Correo electrónico" />
@@ -75,7 +75,7 @@ const submit = () => {
                     <div class="flex justify-between">
                         <label class="flex items-center">
                             <Checkbox name="remember" v-model:checked="form.remember" />
-                                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400"
+                                <span class="ms-2 text-sm text-gray-600"
                                 >
                                     Recordar mis credenciales
                                 </span>
@@ -83,7 +83,7 @@ const submit = () => {
                         <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
-                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Olvidé mi contraseña?
                         </Link>
@@ -102,7 +102,7 @@ const submit = () => {
                     </div>
                 </form>
             </div>
-            <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800 flex gap-2 items-center justify-center">
+            <div class="w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-md sm:rounded-lg flex gap-2 items-center justify-center">
                 ¿No tienes cuenta?
                 <Link 
                 :href="route('register')"
@@ -111,3 +111,4 @@ const submit = () => {
         </div>
     </GuestLayout>
 </template>
+

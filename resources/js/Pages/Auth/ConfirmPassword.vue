@@ -19,7 +19,7 @@ const submit = () => {
 <template>
         <Head title="Confirm Password" />
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        <div class="mb-4 text-sm text-gray-600">
             This is a secure area of the application. Please confirm your
             password before continuing.
         </div>
@@ -50,3 +50,4 @@ const submit = () => {
             </div>
         </form>
 </template>
+

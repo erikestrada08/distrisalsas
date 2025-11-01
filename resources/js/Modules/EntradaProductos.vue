@@ -1,14 +1,14 @@
 <template>
-    <div class="p-1 flex gap-1 w-full items-start">
+    <div class="p-1 flex gap-1 w-full items-start bg-background text-foreground">
         <div class="min-w-[400px] max-w-[400px] w-[400px] flex flex-col gap-1">
-            <div class="flex flex-col gap-1 bg-white p-2 rounded shadow-lg">
+            <div class="flex flex-col gap-1 bg-card text-foreground border border-border p-2 rounded shadow-lg">
                 <label
                 @dragover.prevent="dragging = true"
                 @dragleave.prevent="dragging = false"
                 @drop.prevent="handleDrop"
                 @click="openFileDialog"
-                class="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-6 transition-all cursor-pointer hover:border-blue-400 hover:bg-blue-50"
-                :class="dragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300 bg-white'"
+                class="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-6 transition-all cursor-pointer hover:border-primary/40 hover:bg-muted/10"
+                :class="dragging ? 'border-primary/50 bg-muted/10' : 'border-border bg-card'"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.7" stroke="currentColor" class="size-20 text-gray-400">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
@@ -22,7 +22,7 @@
                     @change="handleFileChange"
                     />
                 </label>
-                <div v-if="file" class="border w-[150px] rounded p-1 cursor-pointer hover:shadow" :title="file.name">
+                <div v-if="file" class="border border-border bg-card text-foreground w-[150px] rounded p-1 cursor-pointer hover:shadow" :title="file.name">
                     <img :src="previsualizar(file)" alt="Imagen factura...">
                     <div class="flex items-center">
                         <span class="w-full truncate text-xs text-gray-500 text-center block">
@@ -34,14 +34,14 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-1 bg-white p-2 rounded shadow-lg">
+            <div class="flex flex-col gap-1 bg-card text-foreground border border-border p-2 rounded shadow-lg">
                 <div>
                     <label for="producto" class="block text-sm font-medium text-gray-700">Producto</label>
                     <select
                     v-model="item.nombre"
                     id="producto" 
                     name="producto" 
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+                    class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
                     placeholder="Seleccione...">
                     </select>
                 </div>
@@ -52,7 +52,7 @@
                     type="number" 
                     id="unidades" 
                     name="unidades" 
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+                    class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
                     placeholder="0">
                 </div>
                 <div>
@@ -62,7 +62,7 @@
                     type="number" 
                     id="precio" 
                     name="precio" 
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+                    class="block w-full rounded-md border-border bg-background text-foreground shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
                     placeholder="0">
                 </div>
                 <div class="flex justify-end pt-1">
@@ -79,9 +79,9 @@
                 </div>
             </div>
         </div>
-        <div class="flex-1 bg-white p-2 rounded shadow-lg">
+        <div class="flex-1 bg-card text-foreground p-2 rounded shadow-lg">
             <span>Factura</span>
-            <ul class="flex flex-col gap-1 p-2 bg-white">
+            <ul class="flex flex-col gap-1 p-2">
                 <li>
                     <span class="font-bold">Proveedor:</span>
                     {{ datosFactura?.proveedor }}
@@ -105,6 +105,7 @@
             removableSort
             editMode="cell"
             @cell-edit-complete="editarCelda"
+            :pt="pt"
             >
                 <template #empty>
                     <div class="text-center text-gray-500 p-2">No hay detalles disponibles</div>
@@ -161,11 +162,11 @@
                     </Row> -->
                 </ColumnGroup>
             </DataTable>
-            <div class="bg-white text-end p-2">
-                <button @click.prevent="guardarEntradaProducto" class="p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">Guardar</button>
+            <div class="bg-card text-end p-2">
+                <button @click.prevent="guardarEntradaProducto" class="p-1 bg-primary text-primary-foreground rounded-md hover:opacity-90">Guardar</button>
             </div>
             <div class="mt-4 text-center text-sm text-gray-600" v-if="loading">Procesando imagen y OCR...</div>
-            <pre v-if="datosFactura" class="mt-4 p-2 bg-green-50 border rounded text-sm whitespace-pre-wrap text-green-800">{{ datosFactura }}</pre>
+            <pre v-if="datosFactura" class="mt-4 p-2 bg-muted/10 border border-border rounded text-sm whitespace-pre-wrap text-foreground">{{ datosFactura }}</pre>
         </div>
     </div>
 </template>
@@ -175,6 +176,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
+import { datatablePt } from '@/utils/themePrimevue';
 
 export default {
     name: 'FacturaPreprocesamiento',
@@ -199,6 +201,9 @@ export default {
             },
             productos: []
         }
+    },
+    computed: {
+        pt() { return datatablePt(); }
     },
     methods: {
         async handleFileChange(event) {
@@ -305,7 +310,14 @@ export default {
 </script>
 
 <style scoped>
-.hidden {
-    display: none;
-}
+.hidden { display: none; }
+:deep(.p-datatable){background:transparent}
+:deep(.p-datatable .p-datatable-thead>tr>th){@apply bg-card text-foreground border-border}
+:deep(.p-datatable .p-datatable-tbody>tr>td){@apply bg-card text-foreground border-border}
+:deep(.p-datatable .p-datatable-tbody input),
+:deep(.p-datatable .p-datatable-tbody select),
+:deep(.p-datatable .p-datatable-tbody textarea){@apply bg-background text-foreground border-border rounded-md}
+:deep(.p-datatable .p-datatable-tbody input::placeholder),
+:deep(.p-datatable .p-datatable-tbody textarea::placeholder){@apply text-gray-500
 </style>
+

@@ -20,7 +20,7 @@
         <!-- Dropdown -->
         <div v-show="userMenuOpen" class="absolute right-0 top-full mt-5 w-52 bg-card text-foreground border rounded-b shadow-md z-50">
           <Link :href="route('profile.edit')" class="block px-3 py-2 hover:bg-muted/10">Perfil</Link>
-          <ThemeToggle class="w-full justify-start rounded-none border-0 bg-transparent hover:bg-muted/10 px-3 py-2" />
+          
           <Link :href="route('logout')" method="post" as="button" class="w-full text-left px-3 py-2 hover:bg-muted/10">Cerrar sesión</Link>
         </div>
       </div>
@@ -69,11 +69,10 @@
 
 <script>
 import { Link } from '@inertiajs/vue3';
-import ThemeToggle from '@/Components/ThemeToggle.vue';
 
 export default {
   name: 'DPanelLayout',
-  components: { Link, ThemeToggle },
+  components: { Link },
   props: {
     moduloActual: {
       type: String,

@@ -2,7 +2,7 @@
   <Head title="DPanel" />
   <DPanelLayout :modulo-actual="moduloActual" @seleccionarModulo="obtenerSubModulos">
     <!-- aviso de modulo no encontrado -->
-    <div v-if="!nombreComponente && subModulos.length < 1" class="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-gray-100 leading-none text-gray-500">
+    <div v-if="!nombreComponente && subModulos.length < 1" class="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-muted/10 leading-none text-gray-500">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="size-16">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
       </svg>
@@ -10,17 +10,17 @@
     </div>
 
     <!-- spinner -->
-    <div v-show="spinner" class="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-gray-100 z-20">
-      <div class="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin" />
-      <span class="text-blue-500 font-bold animate-pulse">Cargando...</span>
+    <div v-show="spinner" class="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-background/80 z-20">
+      <div class="w-12 h-12 border-4 border-primary border-dashed rounded-full animate-spin" />
+      <span class="text-primary font-bold animate-pulse">Cargando...</span>
     </div>
 
     <!-- submodulos -->
     <div v-if="subModulos.length > 0" class="flex gap-1">
       <div class="flex gap-1 overflow-x-auto w-full">
-        <div v-for="submodulo in subModulos" :key="submodulo.id" class="min-w-[200px] bg-white rounded-md shadow flex items-center justify-center p-2 cursor-pointer border hover:border-blue-600" :title="submodulo.descripcion" @click="renderizar(submodulo)">
+        <div v-for="submodulo in subModulos" :key="submodulo.id" class="min-w-[200px] bg-card text-foreground rounded-md shadow flex items-center justify-center p-2 cursor-pointer border border-border hover:border-primary" :title="submodulo.descripcion" @click="renderizar(submodulo)">
           <div class="basis-1/3 flex-shrink-0 flex items-center justify-center">
-            <div class="bg-blue-600 text-white font-bold text-2xl rounded-full w-[40px] h-[40px] flex items-center justify-center">{{ submodulo.abreviatura }}</div>
+            <div class="bg-primary text-primary-foreground font-bold text-2xl rounded-full w-[40px] h-[40px] flex items-center justify-center">{{ submodulo.abreviatura }}</div>
           </div>
           <div class="basis-2/3 flex-shrink-0 flex items-center justify-center leading-none">
             {{ submodulo.sub_modulo }}
