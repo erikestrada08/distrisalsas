@@ -46,7 +46,7 @@
             </div>
 
             <!-- navegacion -->
-            <nav class="relative bg-primary text-primary-foreground flex justify-center gap-1 p-2">
+            <nav class="relative bg-red-600 text-white flex justify-center gap-1 p-2">
                 <Link
                     :href="route('inicio')"
                     class="font-normal hover:font-bold hover:opacity-90 px-1"
@@ -70,7 +70,7 @@
                 </Link>
                 <Link href="#" class="font-normal relative px-1">
                     <span
-                        class="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 bg-accent text-accent-foreground text-xs font-semibold rounded-lg px-1 py-0.5 flex items-center justify-center border border-border"
+                        class="absolute -top-1 -right-2 bg-white text-red-600 text-[10px] font-bold rounded-full h-5 min-w-5 px-1 flex items-center justify-center border border-red-600 shadow-sm"
                     >
                         {{ this.$store.getters.obtenerCarrito.length }}
                     </span>
