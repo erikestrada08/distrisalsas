@@ -133,7 +133,7 @@
                             <div class="flex flex-col">
                                 <label for="producto" class="text-sm">Nombre del producto</label>
                                 <div class="relative">
-                                    <input type="text" id="producto" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.producto">
+                                    <input type="text" id="producto" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.nombre">
                                     <i class="fa-solid fa-tag absolute top-1/2 left-2 -translate-y-1/2"></i>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                             <div class="flex flex-col">
                                 <label for="codigo-barras" class="text-sm">Código de barras</label>
                                 <div class="relative">
-                                    <input type="text" id="codigo-barras" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.codigo_barras">
+                                    <input type="text" id="codigo-barras" class="border border-border bg-background text-foreground rounded-md py-1 pl-7 pr-1 w-full" v-model.trim="producto.codigo_barra">
                                     <i class="fa-solid fa-barcode absolute top-1/2 left-2 -translate-y-1/2 text-sm"></i>
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                             </div>
                 
                             <div class="flex justify-center gap-1">
-                                <button class="bg-green-500 py-1 px-2 rounded-md text-white flex gap-1 items-center justify-center hover:bg-green-600 flex-1" @click.prevent="guardarActualizar('/producto/crear')">
+                                <button class="bg-green-500 py-1 px-2 rounded-md text-white flex gap-1 items-center justify-center hover:bg-green-600 flex-1" @click.prevent="guardarActualizar(rutaComputada)">
                                     <i class="fas fa-save"></i>
                                     {{ !producto.id ? 'guardar' : 'Actualizar' }}
                                 </button>
@@ -306,7 +306,7 @@
 
                         <div class="rounded-md p-2 shadow-md overflow-x-auto bg-card text-foreground border border-border">
                             <DataTable 
-                            :value="productosComputada" 
+                            :value="productos" 
                             dataKey="id" 
                             tableStyle="min-width: 50rem"
                             size="small"
@@ -317,9 +317,9 @@
                             @row-click="(event) => cargarDatosEnFormulario(event, 'producto')"
                             >
                                 <Column field="id" header="Id" sortable/>
-                                <Column field="producto" header="Producto" class="text-nowrap" sortable/>
+                                <Column field="nombre" header="Producto" class="text-nowrap" sortable/>
                                 <Column field="descripcion" header="Descripción" sortable/>
-                                <Column field="codigo_barras" header="Cod. barras" sortable/>
+                                <Column field="codigo_barra" header="Cod. barras" sortable/>
                                 <Column field="precio" header="Precio" sortable/>
                                 <Column field="costo" header="Costo" sortable/>
                                 <Column field="marca" header="Marca" sortable/>
@@ -329,11 +329,11 @@
                                         <span 
                                         class="inline-block rounded-md text-white font-bold w-[30px] text-center"
                                         :class="{
-                                            'bg-red-500': slotProps.data.activo == 'No',
-                                            'bg-green-600': slotProps.data.activo == 'Si'
+                                            'bg-red-500': !slotProps.data.activo,
+                                            'bg-green-600': slotProps.data.activo
                                         }"
                                         >
-                                            {{ slotProps.data.activo }}
+                                            {{ slotProps.data.activo ? "Si" : "No" }}
                                         </span>
                                     </template>
                                 </Column>
@@ -474,7 +474,7 @@ export default {
             modulo: 'Gestión de productos',
             producto: {
                 id: null,
-                producto: null,
+                nombre: null,
                 descripcion: null,
                 precio: null,
                 costo: null,
@@ -482,6 +482,7 @@ export default {
                 marca_id: null,
                 categoria_id: null,
                 activo: true,
+                codigo_barra: null,
                 atributos: {}
             },
             marcas: [],
@@ -577,28 +578,67 @@ export default {
                     }
 
                     break;
-                case '/producto/crear': // GUARDAR O ACTUALIZAR PRODUCTO
+                case '/producto/crear':
 
-                    const formData = new FormData();
-                    Object.entries( this.producto ).forEach( ([key, value]) => {
-                        if (value) formData.append(key, value);
-                    } );
-                    const { data: { data: PRODUCTO }, status: STATUS_PRODUCTO  } = await this.consulta(_ruta,'post',formData);
-                    if (STATUS_PRODUCTO == 201) { // si creó un nuevo recurso
+                    try {
+
+                        const { 
+                            data: { 
+                                data: PRODUCTO 
+                            } 
+                        } = await axios.post(_ruta, this.producto);
+
                         this.productos.push({
                             id: PRODUCTO.id,
-                            producto: PRODUCTO.producto,
+                            nombre: PRODUCTO.nombre,
+                            marca: PRODUCTO.marca,
+                            categoria: PRODUCTO.categoria,
                             descripcion: PRODUCTO.descripcion,
-                            codigo_barras: PRODUCTO.codigo_barras,
+                            codigo_barra: PRODUCTO.codigo_barra,
                             precio: PRODUCTO.precio,
                             costo: PRODUCTO.costo,
-                            imagen: PRODUCTO.imagen
+                            activo: PRODUCTO.activo
                         });
-                        this.producto = PRODUCTO;
-                    } else if (STATUS_PRODUCTO == 200) { // si actualizó un recurso existente
-                        const INDEX = this.productos.findIndex(producto => producto.id == PRODUCTO.id);
-                        console.log(INDEX);
-                        this.productos[INDEX] = PRODUCTO;
+
+                        this.producto.id = PRODUCTO.id;
+
+                    } catch (error) {
+
+                        console.error(error.response);
+                        this.$swal.fire({
+                            title: 'Error!',
+                            text: error.response.data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+
+                    }
+
+                    break;
+                case '/producto/actualizar': 
+
+                    try {
+
+                        const { 
+                            data: { 
+                                data: PRODUCTO 
+                            } 
+                        } = await axios.put(`${_ruta}/${this.producto.id}`, this.producto);
+
+                        const index = this.productos.findIndex(producto => producto.id == PRODUCTO.id);
+
+                        this.productos[index] = PRODUCTO;
+
+                    } catch (error) {
+
+                        console.error(error.response);
+                        this.$swal.fire({
+                            title: 'Error!',
+                            text: error.response.data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+
                     }
 
                     break;
@@ -699,6 +739,10 @@ export default {
                 }
             });
             return PRODUCTOS;
+        },
+
+        rutaComputada() {
+            return `/producto/${ !this.producto.id ? "crear" : "actualizar" }`;
         }
     }
 }

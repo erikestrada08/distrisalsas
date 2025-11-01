@@ -62,6 +62,7 @@ Route::middleware(['auth.home', 'verified'])->group(function () {
 
     #region productos
     Route::post('/producto/crear', [ProductoController::class, 'store'])->name('producto.store');
+    Route::put('/producto/actualizar/{producto}', [ProductoController::class, 'update'])->name('producto.update');
     Route::get('/producto/listar', [ProductoController::class, 'index'])->name('producto.index');
     #endregion
     
